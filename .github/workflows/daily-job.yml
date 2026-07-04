@@ -17,7 +17,4 @@ jobs:
         run: docker build -t optibot-sync-agent .
 
       - name: Run Scraper via Docker
-        env:
-          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
-        # Lệnh chạy đúng chuẩn yêu cầu: "docker run -e API_KEY=... main.py runs once and exits 0"
-        run: docker run -e GEMINI_API_KEY=$GEMINI_API_KEY optibot-sync-agent
+        run: docker run -e GEMINI_API_KEY="${{ secrets.GEMINI_API_KEY }}" optibot-sync-agent
