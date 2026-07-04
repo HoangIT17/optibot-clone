@@ -1,0 +1,23 @@
+name: OptiBot Daily Delta Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # Chạy tự động vào 0h sáng mỗi ngày
+  workflow_dispatch: # Hỗ trợ nút bấm chạy thủ công để test ngay lập tức
+
+jobs:
+  scrape-and-sync:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Build Docker Image
+        run: docker build -t optibot-sync-agent .
+
+      - name: Run Scraper via Docker
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+        # Lệnh chạy đúng chuẩn yêu cầu: "docker run -e API_KEY=... main.py runs once and exits 0"
+        run: docker run -e GEMINI_API_KEY=$GEMINI_API_KEY optibot-sync-agent
