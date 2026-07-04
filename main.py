@@ -94,7 +94,7 @@ def main():
     print(f"\n[2] Dang upload {len(files_to_upload)} file moi/cap nhat len Gemini...")
     for item in files_to_upload:
         try:
-            client.files.upload(file=item['path'], config={'mime_type': 'text/markdown'})
+            client.files.upload(file=item['path'], config={'mime_type': 'text/plain'})
             print(f"  [OK] Uploaded: {os.path.basename(item['path'])}")
             
             # Chi ghi nhan hash thanh cong vao state khi da up thanh cong len AI
